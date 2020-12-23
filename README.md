@@ -10,7 +10,7 @@
     * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
     * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
   * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
-* [3 Regler le timer de l interruption de lecture Midi](#3-Regler-le-timer-de-l-interruption-de-lecture-Midi)  
+* [3 Regler le timer de l interruption de lecture Midi](#3-Regler-le-timer-de-l'interruption-de-lecture-Midi)  
 * [Conclusion](#Conclusion)
 
 ## 1 But du projet
@@ -85,7 +85,7 @@ Il faudra alors configurer les ports d'E/S de Traktor comme cela par exemple :
 
 ![](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Traktor.PNG)
 
-## 3 Regler le timer de l interruption de lecture Midi
+## 3 Regler le timer de l'interruption de lecture Midi
 
 
 
