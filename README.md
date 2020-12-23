@@ -6,9 +6,9 @@
 
 * [1 But du projet](#1-But-du-projet)
 * [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE-USB-HID)
- * [2-1-1 Sans la directive SERIE chipset 16U2](#2-1-1-Sans-la-directive-SERIE-chipset-16U2)
-* [dd](#dd)
-* [ee](#ee)
+  * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
+  * [2-1-2 Avec chipset CH340](#2-1-2 Avec-chipset-CH340)
+* [2-2 Avec la directive SERIE](#2-2 Avec-la-directive-SERIE)
 * [Conclusion](#Conclusion)
 
 
@@ -22,13 +22,13 @@ Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites d
 
 Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
-## 2-1 Compilation sans la directive SERIE USB HID
+## 2-1 Compilation sans la directive SERIE : USB HID
 
 Appareil "HID Midi compiant" <=>  USB-HID
 
 La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino.
 
-### 2-1-1 Sans la directive SERIE chipset 16U2
+### 2-1-1 Disposant du chipset 16U2
 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset 16U2 
 ```
 //#define SERIE
@@ -45,18 +45,14 @@ Avec la reprogrammation du soft à l'aide de [Moco Lufa](https://github.com/kuwa
 - le débrancher et connecter les broches 4 et 6 de l'ISP
 - le re-brancher pour qu'il apparaisse en USB-HID
 
-### dd
-
-2.1.2 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset CH340
+### 2-1-2 Avec chipset CH340
 
 Que l'on trouve dans les Arduinos version Chinoise [et le CH340 serait supérieur au 16U2](https://makersportal.com/blog/2019/3/12/testing-the-arduino-ch340-board).
 
 Des module "ch340 usb converter" existent, il semblerait que, grâce à ce type de module l'Arduino serait vu alors comme un appareil "HID Midi compiant".
 
 
-## ee
-
-2.2 Avec la directive SERIE
+## 2-2 Avec la directive SERIE
 Le choix se présente avec les pré-directives de compilation 
 - \# define SERIE non commenté implique qu'il faudra l'utilisation de Hairless
 
