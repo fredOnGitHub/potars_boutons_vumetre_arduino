@@ -10,7 +10,7 @@
     * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
     * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
   * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
-* [3 R&eacute;gler le timer de l&rsquo;interruption de lecture Midi](#Regler-le-timer-de-l-interruption-de-lecture-Midi)  
+* [3 Regler le timer de l interruption de lecture Midi](#3-Regler-le-timer-de-l-interruption-de-lecture-Midi)  
 * [Conclusion](#Conclusion)
 
 ## 1 But du projet
