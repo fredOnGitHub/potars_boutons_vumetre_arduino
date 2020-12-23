@@ -20,6 +20,10 @@ Le choix se présente avec les pré-directives de compilation
 
 ![Hairless](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Hairless.PNG)
 
-qui va permettre d'interfacer l'entrée et sortie (E/S) de l'Arduino avec des ports midi qui sont gérer par exemple avec ce logiciel "LoopMIDI.PNG" :
+qui va permettre d'interfacer l'entrée et sortie (E/S) de l'Arduino avec des ports midi qui sont gérer avec ce logiciel par exemple :
 
 ![LoopMIDI.PNG](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/LoopMIDI.PNG)
+
+Il faudra alors configurer les E/S de Traktor comme cela par exemple :
+
+![](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Traktor.PNG)
