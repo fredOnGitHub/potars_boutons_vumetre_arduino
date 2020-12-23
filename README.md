@@ -25,11 +25,10 @@ Dans ce cas le Baudrate sera à 31250 (modifiable) et l'Arduino est vu comme un 
 Le Baudrate à 31250 (testé et OK), de ce que j'ai vu, est compatible avec Moco Lufa et il serait possible de changer ce Baudrate ... [à voir](https://forum.arduino.cc/index.php?topic=515491.0)
 
 Avec la reprogrammation du soft à l'aide de Moco Lufa on reprogrammer en série l'Arduino et l'utiliser en USB-HID. Pour se faire :
-- Débrancher l'Arduino
-- laisser les broche de l'ISP libre
+- Débrancher l'Arduino et laisser les broche de l'ISP libre
 - brancher l'Arduino pour lancer la compilation
 - le débrancher et connecter les broches 4 et 6 de l'ISP
-- le re-brancher
+- le re-brancher pour qu'il apparaisse en USB-HID
 
 ### 2.1.2 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset CH340
 
