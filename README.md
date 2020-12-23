@@ -10,14 +10,16 @@ Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites d
 
 Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
-## 2.1 Compilation sans la directive SERIE
+## 2.1 Compilation sans la directive SERIE : appareil "HID Midi compiant" <=>  USB-HID
 
-La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino
+La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino.
 
 ### 2.1.1 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset 16U2 
 ```
 //#define SERIE
 ```
+[Wikipedia](https://en.wikipedia.org/wiki/Human_interface_device) => ...The term "HID" most commonly refers to the USB-HID specification. The term was coined by Mike Van Flandern of Microsoft when he proposed that the USB committee create a Human Input Device class working group...
+
 Dans ce cas le Baudrate sera à 31250 (modifiable) et l'Arduino est vu comme un composant "HID Midi compiant" grâce à une recompilation du soft de l'Arduino avec le DFU (Device Firmware Update). Voir [ici](https://www.arduino.cc/en/Hacking/DFUProgramming8U2).
 
 Le Baudrate à 31250 (testé et OK), de ce que j'ai vu, est compatible avec Moco Lufa et il serait possible de changer ce Baudrate ... [à voir](https://forum.arduino.cc/index.php?topic=515491.0)
@@ -25,8 +27,6 @@ Le Baudrate à 31250 (testé et OK), de ce que j'ai vu, est compatible avec Moco
 ### 2.1.2 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset CH340
 
 Que l'on trouve dans les Arduinos version Chinoise [et le CH340 serait supérieur au 16U2](https://makersportal.com/blog/2019/3/12/testing-the-arduino-ch340-board).
-
-[Wikipedia](https://en.wikipedia.org/wiki/Human_interface_device) => ...The term "HID" most commonly refers to the USB-HID specification. The term was coined by Mike Van Flandern of Microsoft when he proposed that the USB committee create a Human Input Device class working group...
 
 Des module "ch340 usb converter" existent, il semblerait que, grâce à ce type de module l'Arduino serait vu alors comme un appareil "HID Midi compiant".
 
