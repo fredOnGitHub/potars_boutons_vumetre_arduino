@@ -15,4 +15,8 @@ Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une ro
 La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino
 
 Le choix se présente avec les pré-directives de compilation 
-- \# define SERIE non commenté implique qu'il faudra l'utilisation de Hairless 
+- \# define SERIE non commenté implique qu'il faudra l'utilisation de Hairless
+
+![Hairless](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Hairless.PNG)
+
+qui va permettre d'interfacer l'entrée et sortie (E/S) de l'Arduino avec des ports midi qui sont gérer par exemple avec ce logiciel "LoopMIDI.PNG" :
