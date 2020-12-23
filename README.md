@@ -5,7 +5,7 @@
 ## Documentation
 
 * [1 But du projet](#1-But-du-projet)
-* [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE-:-USB-HID)
+* [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE-=>-USB-HID)
   * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
   * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
 * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
@@ -22,7 +22,7 @@ Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites d
 
 Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
-## 2-1 Compilation sans la directive SERIE : USB HID
+## 2-1 Compilation sans la directive SERIE => USB HID
 
 Appareil "HID Midi compiant" <=>  USB-HID
 
