@@ -18,6 +18,11 @@ La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dos
 ```
 //#define SERIE
 ```
+Dans ce cas le Baudrate sera à 31250 et l'Arduino est vu comme un composant "HID Midi compiant" grâce à une recompilation du soft de l'Arduino avec le DFU (Device Firmware Update). Voir [ici](https://www.arduino.cc/en/Hacking/DFUProgramming8U2).
+
+[Wikipedia](https://en.wikipedia.org/wiki/Human_interface_device) => ...The term "HID" most commonly refers to the USB-HID specification. The term was coined by Mike Van Flandern of Microsoft when he proposed that the USB committee create a Human Input Device class working group...
+
+(// USB MIDI MODE for MOCO lufa
 
 ## 2.2 Avec la directive SERIE
 Le choix se présente avec les pré-directives de compilation 
