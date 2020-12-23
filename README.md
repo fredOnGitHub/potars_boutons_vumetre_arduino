@@ -24,11 +24,12 @@ Le Baudrate à 31250 (testé et OK), de ce que j'ai vu, est compatible avec Moco
 
 ### 2.1.2 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset CH340
 
-Que l'on trouve dans les Arduinos version Chinoise et le CH340 [serait supérieur au 16U2](https://makersportal.com/blog/2019/3/12/testing-the-arduino-ch340-board).
+Que l'on trouve dans les Arduinos version Chinoise [et le CH340 serait supérieur au 16U2](https://makersportal.com/blog/2019/3/12/testing-the-arduino-ch340-board).
 
 [Wikipedia](https://en.wikipedia.org/wiki/Human_interface_device) => ...The term "HID" most commonly refers to the USB-HID specification. The term was coined by Mike Van Flandern of Microsoft when he proposed that the USB committee create a Human Input Device class working group...
 
-(// USB MIDI MODE for MOCO lufa
+Des module "ch340 usb converter" existent, il semblerait que, grâce à ce type de module l'Arduino serait vu alors comme un appareil "HID Midi compiant".
+
 
 ## 2.2 Avec la directive SERIE
 Le choix se présente avec les pré-directives de compilation 
