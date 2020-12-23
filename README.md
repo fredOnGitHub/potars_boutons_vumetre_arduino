@@ -5,8 +5,8 @@
 ## Documentation
 
 * [1 But du projet](#1-But-du-projet)
-  * [2.1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE-USB-HID)
-* [cc](##cck)
+* [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE-USB-HID)
+ * [2-1-1 Sans la directive SERIE chipset 16U2](#2-1-1-Sans-la-directive-SERIE-chipset-16U2)
 * [dd](#dd)
 * [ee](#ee)
 * [Conclusion](#Conclusion)
@@ -23,13 +23,12 @@ Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites d
 Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
 ## 2-1 Compilation sans la directive SERIE USB HID
-2.1 Compilation sans la directive SERIE : appareil "HID Midi compiant" <=>  USB-HID
+
+Appareil "HID Midi compiant" <=>  USB-HID
 
 La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino.
 
-### cc
-
-2.1.1 Sans la directive SERIE chipset 16U2
+### 2-1-1 Sans la directive SERIE chipset 16U2
 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset 16U2 
 ```
 //#define SERIE
