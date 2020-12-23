@@ -10,6 +10,9 @@ Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites d
 
 Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
+## Compilation
 
+La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino
 
-
+Le choix se présente avec les pré-directives de compilation 
+- \# define SERIE non commenté implique qu'il faudra l'utilisation de Hairless 
