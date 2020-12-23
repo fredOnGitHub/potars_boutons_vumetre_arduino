@@ -49,12 +49,15 @@ Avec la reprogrammation du soft à l'aide de [Moco Lufa](https://github.com/kuwa
 
 Que l'on trouve dans les Arduinos version Chinoise [et le CH340 serait supérieur au 16U2](https://makersportal.com/blog/2019/3/12/testing-the-arduino-ch340-board).
 
-Des module "ch340 usb converter" existent, il semblerait que, grâce à ce type de module l'Arduino serait vu alors comme un appareil "HID Midi compiant".
+Des module "ch340 usb converter" existent, il semblerait que, grâce à ce type de module, l'Arduino serait vu alors comme un appareil "HID Midi compiant".
 
 
 ## 2-2 Avec la directive SERIE
-Le choix se présente avec les pré-directives de compilation 
-- \# define SERIE non commenté implique qu'il faudra l'utilisation de Hairless
+Ce choix de compilation se fait de cette manière 
+```
+#define SERIE
+```
+non commenté implique qu'il faudra l'utilisation de Hairless.
 
 ![Hairless](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Hairless.PNG)
 
@@ -62,11 +65,11 @@ avec la Baudrate à 115200
 
 ![](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Hairless_Settings.PNG)
 
-qui va permettre d'interfacer l'entrée et sortie (E/S) de l'Arduino avec des ports midi qui sont gérer avec ce logiciel par exemple :
+qui va permettre d'interfacer l'entrée et sortie (E/S) série de l'Arduino avec des ports midi qui sont crés avec ce logiciel par exemple :
 
 ![LoopMIDI.PNG](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/LoopMIDI.PNG)
 
-Il faudra alors configurer les E/S de Traktor comme cela par exemple :
+Il faudra alors configurer les ports d'E/S de Traktor comme cela par exemple :
 
 ![](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Traktor.PNG)
 
