@@ -2,6 +2,10 @@
 
 # Midi-Arduino-potentiometres-boutons-VU-m&egrave;tre
 
+## Documentation
+
+* [But](#1 But du projet)
+
 ## 1 But du projet
 
 Bonjour, ceci est un projet Arduino Uno (adaptable) Midi pour lire des signaux de vumètre avec Traktor particulièrement.
