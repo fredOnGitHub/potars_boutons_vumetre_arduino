@@ -6,6 +6,7 @@
 
 * [But du projet](##1But-du-projet)
 * [Compilation sans la directive SERIE USB-HID](##2.1-Compilation-sans-la-directive-SERIE-USB-HID)
+* [Conclusion](##Conclusion)
 
 ## 1 But du projet
 
@@ -61,3 +62,5 @@ qui va permettre d'interfacer l'entrée et sortie (E/S) de l'Arduino avec des po
 Il faudra alors configurer les E/S de Traktor comme cela par exemple :
 
 ![](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Traktor.PNG)
+
+## Conclusion
