@@ -27,8 +27,7 @@ Pour passer à 30 Hz de changement de front il faut calculer
 ```
 (16*10^6) / (30*1024) - 1 = 519
 ```
-qui est > 255 du byte de 8 bits du timer 2 donc il faut le faire avec le timer 1 qui est sur 2 bytes (2 octets).
-donc le timer 1 est utilisé car sur 2 bytes et permet des valeurs < 65536
+qui est > 255 du byte de 8 bits du timer 2 donc il faut le faire avec le timer 1 qui est sur 2 bytes (2 octets) donc le timer 1 est utilisé car sur 2 bytes et permet des valeurs < 65536
 ```
 OCR1A = 519;// = (16*10^6) / (50*1024) - 1 (must be <65536)
 ```
