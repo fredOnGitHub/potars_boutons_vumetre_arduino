@@ -1,5 +1,19 @@
-# potars_boutons_vumetre_arduino
+**Table of Contents**
+
+[TOCM]
+
+[TOC]
+
+# Midi-Arduino-potentiometres-boutons-vumetre
 
 ## But du projet
+
 Bonjour, ceci est un projet Arduino Uno (adaptable) Midi pour lire des signaux de vumètre avec Traktor particulièrement.
+
+Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites dans la boucle sans fin (loop).
+
+Pour la lecture des états de vumètres Midi ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant).
+
+
+
 
