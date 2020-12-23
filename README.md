@@ -11,7 +11,7 @@
     * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
   * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
 * [3 Régler le timer de l'interruption de lecture Midi](#Regler-le-timer-de-l'interruption-de-lecture-Midi)  
-* [Conclusion](#Conclusion)
+* [Conclusion](#Conclusion&agrave;)
 
 ## 1 But du projet
 
@@ -89,6 +89,6 @@ Il faudra alors configurer les ports d'E/S de Traktor comme cela par exemple :
 
 
 
-## Conclusion
+## Conclusion&agrave;
 
 
