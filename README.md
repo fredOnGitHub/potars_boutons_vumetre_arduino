@@ -14,12 +14,23 @@
 
 ## 1 But du projet
 
-Ceci est un projet Arduino Uno (Mega,...) Midi pour lire des signaux de vumètre avec Traktor particulièrement.
+Ceci est un projet Arduino Uno (Mega,...) Midi pour envoyer des commandes midi avec des potentiomètres, boutons poussoirs, lire des signaux de vumètre avec Traktor particulièrement.
 
 Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites dans la boucle sans fin (loop).
 
 La lecture des états des VU-m&egrave; Midi, est réalisée dans une routine d'interruption (timer n°2) cadencée à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
+```
+OCR2A = 155;// = (16*10^6) / (100*1024) - 1 (must be <256)
+```
 
+Pour passer à 30 Hz de changement de front il faut calculer 
+```
+(16*10^6) / (30*1024) - 1 = 311
+```
+qui est > 255 du byte de 8 bits du timer 2 donc il faut le faire avec le timer 1 qui est sur 2 bytes (2 octets).
+ 
+OCR1A = 311;// = (16*10^6) / (50*1024) - 1 (must be <65536)
+ 
 ## Compilation
 
 La compilation n'a besoin d'aucune bibliothèque dans le dossier Arduino.
