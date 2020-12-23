@@ -2,6 +2,16 @@
 
 # Midi-Arduino-potentiometres-boutons-VU-m&egrave;tre
 
+----
+
+## On this page
+{:.no_toc}
+
+- TOC
+{:toc}
+
+----
+
 ## Documentation
 
 * [1 But du projet](#1-But-du-projet)
