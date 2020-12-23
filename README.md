@@ -6,8 +6,8 @@
 
 * [But du projet](##aa)
 * [Compilation sans la directive SERIE USB-HID](##bb)
-* [cc](##cc)
-* [dd](##dd)
+* [cc](###cc)
+* [dd](###dd)
 * [ee](##ee)
 * [Conclusion](##Conclusion)
 
