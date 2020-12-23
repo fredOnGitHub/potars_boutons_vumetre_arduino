@@ -14,7 +14,12 @@ Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une ro
 
 La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino
 
-## 2.1 Avec la directive SERIE
+## 2.1 Sans la directive SERIE où cette ligne de code est commenté avec 
+```
+//#define SERIE
+```
+
+## 2.2 Avec la directive SERIE
 Le choix se présente avec les pré-directives de compilation 
 - \# define SERIE non commenté implique qu'il faudra l'utilisation de Hairless
 
