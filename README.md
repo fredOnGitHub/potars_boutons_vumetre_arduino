@@ -86,7 +86,7 @@ Il faudra alors configurer les ports d'E/S de Traktor comme cela par exemple :
 
 ![](https://github.com/fredOnGitHub/Midi-Arduino-potentiometres-boutons-vumetre/blob/main/Traktor.PNG)
 
-## 3 R&eacute;gler le timer de l&apos;interruption de lecture Midi
+## 3 R&eacute;gler le timer de l-'-interruption de lecture Midi
 
 
 
