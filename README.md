@@ -5,28 +5,28 @@
 ## Documentation
 
 * [1 But du projet](#1-But-du-projet)
-* [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE)
+* [2 Compilation](#Compilation)
+ * [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE)
   * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
   * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
-* [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
+ * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
 * [Conclusion](#Conclusion)
-
-
-
 
 ## 1 But du projet
 
-Ceci est un projet Arduino Uno (adaptable) Midi pour lire des signaux de vumètre avec Traktor particulièrement.
+Ceci est un projet Arduino Uno (Mega,...) Midi pour lire des signaux de vumètre avec Traktor particulièrement.
 
 Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites dans la boucle sans fin (loop).
 
-Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
+La lecture des états des VU-m&egrave; Midi, est réalisée dans une routine d'interruption (timer n°2) cadencée à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
-## 2-1 Compilation sans la directive SERIE
+## Compilation
+
+La compilation n'a besoin d'aucune bibliothèque dans le dossier Arduino.
+
+### 2-1 Compilation sans la directive SERIE
 
 Ce sera donc un appareil "HID Midi compiant" <=>  USB-HID
-
-La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino.
 
 ### 2-1-1 Disposant du chipset 16U2
 Sans la directive SERIE où cette ligne de code est commenté, Arduino (Uno) avec chipset 16U2 
