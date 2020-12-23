@@ -5,7 +5,7 @@
 ## Documentation
 
 * [But du projet](##1But-du-projet)
-* [Compilation sans la directive SERIE USB-HID](##1Compilation-sans-la-directive-SERIE-USB-HID)
+* [Compilation sans la directive SERIE USB-HID](##2.1-Compilation-sans-la-directive-SERIE-USB-HID)
 
 ## 1 But du projet
 
