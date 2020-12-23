@@ -4,8 +4,8 @@
 
 ## Documentation
 
-* [aa](#aa)
-* [bb](#bb)
+* [1 But du projet](#1 But du projet)
+* [2.1 Compilation sans la directive SERIE USB-HID](#2.1 Compilation sans la directive SERIE USB-HID)
 * [cc](##cck)
 * [dd](#dd)
 * [ee](#ee)
@@ -14,9 +14,7 @@
 
 
 
-## aa
-
-1 But du projet
+## 1 But du projet
 
 Ceci est un projet Arduino Uno (adaptable) Midi pour lire des signaux de vumètre avec Traktor particulièrement.
 
@@ -24,9 +22,7 @@ Les commandes d'envoient des boutons poussoirs, et potentiomètres sont faites d
 
 Pour la lecture des états des VU-m&egrave; Midi, ceci est réalisé dans une routine d'execption cadencé à 50 Hz de forme d'onde (100 Hz de changement de front : haut et descendant) ce qui est suffisant pour l'oeil humain.
 
-## bb
-
-2.1 Compilation sans la directive SERIE USB-HID
+## 2.1 Compilation sans la directive SERIE USB-HID
 2.1 Compilation sans la directive SERIE : appareil "HID Midi compiant" <=>  USB-HID
 
 La compilation réussi alors qu'aucune bibliothèque n'est présente dans le dossier Arduino.
