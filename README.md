@@ -4,7 +4,7 @@
 
 ## Documentation
 
-* [But](##1 But du projet)
+* [But](##1 But-du-projet)
 
 ## 1 But du projet
 
