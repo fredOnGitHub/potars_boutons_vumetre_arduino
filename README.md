@@ -6,10 +6,10 @@
 
 * [1 But du projet](#1-But-du-projet)
 * [2 Compilation](#Compilation)
- * [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE)
-  * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
-  * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
- * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
+  * [2-1 Compilation sans la directive SERIE USB-HID](#2-1-Compilation-sans-la-directive-SERIE)
+    * [2-1-1 Disposant du chipset 16U2](#2-1-1-Disposant-du-chipset-16U2)
+    * [2-1-2 Avec chipset CH340](#2-1-2-Avec-chipset-CH340)
+  * [2-2 Avec la directive SERIE](#2-2-Avec-la-directive-SERIE)
 * [Conclusion](#Conclusion)
 
 ## 1 But du projet
