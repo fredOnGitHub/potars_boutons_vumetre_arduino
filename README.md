@@ -3,54 +3,6 @@
 # Midi-Arduino-potentiometres-boutons-VU-m&egrave;tre
 
 ----
-- [1 ah1'aaa](#1-ah1aaa)
-  - [1.1 ah2](#11-ah2)
-- [2 ah1](#2-ah1)
-  - [2.1 éah2'bbb](#21-éah2bbb)
-
-
-# 1 ah1'aaa
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-## 1.1 ah2
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-# 2 ah1
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-## 2.1 éah2'bbb
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
-
-----
 
 ## Documentation
 
@@ -63,6 +15,7 @@
 * [3 Regler le timer de l&#8216;interruption de lecture Midi](#3-R&eacute;gler-le-timer-de-l-interruption-de-lecture-Midi)  
 * [Conclusion](#Conclusion)
 
+----
 
 ## 1 But du projet
 
