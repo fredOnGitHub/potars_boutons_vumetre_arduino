@@ -1,5 +1,3 @@
-a
-
 # Midi-Arduino-potentiometres-boutons-VU-m&egrave;tre
 
 ----
