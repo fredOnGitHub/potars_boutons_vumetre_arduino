@@ -9,11 +9,12 @@ see https://github.com/
 #define POTENTIOMETRE_H
 
 typedef struct {
-
+  
   const int pin;
+  const int numeroMidi;
+  
   int ancienne_valeur;
   int valeur;
-  const int numeroMidi;
 } POTENTIOMETRE;
 
 

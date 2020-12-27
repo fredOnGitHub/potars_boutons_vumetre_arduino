@@ -1,7 +1,7 @@
-/*       
+/*
 
-Author : fredOnGithub
-see https://github.com/
+  Author : fredOnGithub
+  see https://github.com/
 
 */
 
@@ -10,20 +10,37 @@ see https://github.com/
 
 #include "mon_midi.h"
 
+enum TYPE_BOUTON { PULL_DOWN_EXT, PULL_UP_EXT, PULL_UP_ARDUINO };
+
 typedef struct {
+
   const byte pin;
   const byte type;
+  const byte numeroMidi;
+
   byte buttonState;
   byte lastButtonState;
   unsigned long lastDebounceTime;
-  const byte numeroMidi;
 } BOUTON;
 
 
 void init_boutons(BOUTON* Tb[], const byte NOMBRE_BOUTONS) {
 
   for (int i = 0; i < NOMBRE_BOUTONS; i++) {
+
     BOUTON* b = Tb[i];
+
+    b->lastDebounceTime = 0;
+
+    if (b->type == PULL_UP_ARDUINO) {
+      b->buttonState = b->lastButtonState = 1;
+      pinMode(b->pin, b->type);
+    } else if (b->type == PULL_DOWN_EXT) {
+      b->buttonState = b->lastButtonState = 0;
+    } else if (b->type == PULL_UP_EXT) {
+      b->buttonState = b->lastButtonState = 1;
+    }
+
     pinMode(b->pin, b->type);
   }
 }

@@ -1,7 +1,7 @@
-/*       
+/*
 
-Author : fredOnGithub
-see https://github.com/
+  Author : fredOnGithub
+  see https://github.com/
 
 */
 
@@ -24,27 +24,30 @@ const byte Led = 11; // Pour utiliser la LED du module
 #define LedToggle digitalWrite (Led, !digitalRead(Led))
 
 
+//struct Z{
+//  const byte a;
+//  byte b;
+//  const byte c;
+//};
+////Z z ={1,2};
+//Z z {.a=1,.b=2};
+
 /////////////////////////////// Initialisation des boutons ///////////////////////////////
-BOUTON b1 = {2, INPUT_PULLUP, HIGH, HIGH, 0, 60};
+BOUTON b1 = {2, PULL_UP_ARDUINO, 60};
 BOUTON* Tb[] = {&b1};
 const int NOMBRE_BOUTONS = sizeof(Tb) / sizeof(BOUTON*);
 
 
 /////////////////////////////// Initialisation des potentiomètres ///////////////////////////////
-POTENTIOMETRE p1{A0, 0, 0, 50};
+POTENTIOMETRE p1{A0, 50};
 POTENTIOMETRE* Tp[] = {&p1};
 const int NOMBRE_POTENTIOMETRES = sizeof(Tp) / sizeof(POTENTIOMETRE*);
 
 
 /////////////////////////////// Initialisation des VU-mètres ///////////////////////////////
 byte pins_leds_vumetre_1[] = { 4, 5, 6, 7, 10};
-byte canal_INPUT_du_VU_metre_1 = 1;//de 1 à 16 inclu
-byte cc_ou_noteOn_1 = Note;
-byte commande_1 = cc_ou_noteOn_1 + canal_INPUT_du_VU_metre_1 - 1;
-// commande_1 == 0x90 + 1 - 1 = 0x90
-// pour C1 voir le module "vumetre.h"
-VUMETRE v1 = {pins_leds_vumetre_1, sizeof(pins_leds_vumetre_1) / sizeof(byte),  commande_1, 24};//C1 == 24
-// ...commande_1, C1) == Ch01.Note.C1 de Traktor
+VUMETRE v1 = {pins_leds_vumetre_1, sizeof(pins_leds_vumetre_1) / sizeof(byte),  0x90, 0};//C1 == 24
+// ...commande_1, C1) == Ch01.Note.C-1 de Traktor
 
 /////////////////////////////// Initialisation du tableau des VU-mètres ///////////////////////////////
 VUMETRE* Tv[] = {&v1};
@@ -52,6 +55,9 @@ const byte NOMBRE_VUMETRES = sizeof(Tv) / sizeof(VUMETRE*);
 
 void setup() {
   Serial.begin(BAUD);
+  //  Serial.println(z.a);
+  //  Serial.println(z.b);
+  //  Serial.println(z.c);
   init_boutons(Tb, NOMBRE_BOUTONS);
   init_vumetres(Tv, NOMBRE_VUMETRES);
   met_le_port_midi_OUTPUT_a(5);
