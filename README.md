@@ -16,7 +16,7 @@
   - [4 Exemples de configurations](#4-exemples-de-configurations)
     - [4.1 Exemple de configuration de bouton poussoir](#41-exemple-de-configuration-de-bouton-poussoir)
     - [4.2 Exemple de configuration des potentiomètres](#42-exemple-de-configuration-des-potentiomètres)
-    - [4.3 Exemple de configuration des Vu-mètres](#43-exemple-de-configuration-des-vu-mètres)
+    - [4.3 Exemple de configuration d'un Vu-mètre](#43-exemple-de-configuration-dun-vu-mètre)
 
 ----
 
@@ -113,64 +113,31 @@ OCR1A = 519;// = (16*10^6) / (50*1024) - 1 (must be <65536)
 ### 4.1 Exemple de configuration de bouton poussoir
 
 ```
-/////////////////////////////// Initialisation du bouton ///////////////////////////////
-BOUTON b1 = {2, INPUT_PULLUP, HIGH, HIGH, 0, 60};
-BOUTON* Tb[] = {&b1};
-const int NOMBRE_BOUTONS = sizeof(Tb) / sizeof(BOUTON*);
+BOUTON b1 = {9, INPUT, 60};
 ```
-BOUTON b1 = {2, INPUT_PULLUP, HIGH, HIGH, 0, 60}; 
-Dans cette expression il y a :
-- 2 : le pin
-- INPUT_PULLUP : le type de ce bouton est du type INPUT_PULLUP d'Arduino
-- HIGH : au départ son état est à haut (LOW ou '0' si il s'agit d'une configuration push down)
-- HIGH : pareil que le précédant
-- 0 : toujours à 0
-- 60 : sa note Midi
 
-Le tableau de boutons est initialisé par la suite.
+Le bouton est configuré en externe (Pull-Up ou Pull down).
+
+Note : Pour une configuration de bouton poussoir avec propre à Arduino il faut utiliser INPUT_PULLUP à la place de INPUT.
+
+Il possède la note midi numéro 60.
 
 ### 4.2 Exemple de configuration des potentiomètres
 
 ```
-POTENTIOMETRE p1{A0, 0, 0, 50};
-POTENTIOMETRE* Tp[] = {&p1};
-const int NOMBRE_POTENTIOMETRES = sizeof(Tp) / sizeof(POTENTIOMETRE*);
+POTENTIOMETRE p1{A0, 50};
 ```
-POTENTIOMETRE p1{A0, 0, 0, 50};
-Dans cette expression il y a :
-- A0 : le pin d'entrée analogique sur 10 bits pour l'Arduino Uno
-- 0 : toujours
-- 0 : toujouts
-- 50 : sa note Midi
+Le potentiomètre est définie sur la broche d'entrée analogique A0.
 
-Le tableau de potentiomètres est initialisé par la suite.
+Il possède la note midi 50.
 
-### 4.3 Exemple de configuration des Vu-mètres
+### 4.3 Exemple de configuration d'un Vu-mètre
 
 ```
-/////////////////////////////// Initialisation du tableau des VU-mètres ///////////////////////////////
-byte pins_leds_vumetre_1[] = { 4, 5, 6, 7, 10};
-byte canal_INPUT_du_VU_metre_1 = 1;//de 1 à 16 inclu
-byte cc_ou_noteOn_1 = Note;
-byte commande_1 = cc_ou_noteOn_1 + canal_INPUT_du_VU_metre_1 - 1;
-// commande_1 == 0x90 + 1 - 1 = 0x90
-// pour C1 voir le module "vumetre.h"
-VUMETRE v1 = {pins_leds_vumetre_1, sizeof(pins_leds_vumetre_1) / sizeof(byte),  commande_1, 24};//C1 == 24
-// ...commande_1, C1) == Ch01.Note.C1 de Traktor
-
-/////////////////////////////// Initialisation du tableau des VU-mètres ///////////////////////////////
-VUMETRE* Tv[] = {&v1};
-const byte NOMBRE_VUMETRES = sizeof(Tv) / sizeof(VUMETRE*);
+byte pins_leds_vumetre_1[] = { 2, 3, 4, 5, 6, 7};
+VUMETRE v1 = {pins_leds_vumetre_1, sizeof(pins_leds_vumetre_1) / sizeof(byte),  0x90, 0};//C1 == 24
 ```
 
-byte pins_leds_vumetre_1[] = { 4, 5, 6, 7, 10};
-Dans ces expressions il y a :
-- byte pins_leds_vumetre_1[] = { 4, 5, 6, 7, 10} : les pins de sorties des leds du VU-mètre
-- la définition de :
-  - canal_INPUT_du_VU_metre_1 : canal d'entrée à intercepter; 
-  - cc_ou_noteOn_1 : noteOn exactement (Traktor envoie ce type de note si on choisi note)
-  - VUMETRE v1 = {... : initialisation de la structure de VU-mètre qui contient la référence du tableau de leds (de type Byte) avec la taille de ce tableau.
-- VUMETRE* Tv[] = {&v1} : l'initialisation du tableau des structures de led
-- const byte NOMBRE_VUMETRES : la taille calculée automatiquement de ce tableau
+On a défini les Pins d'entrée des LEDs du vumètre de 2 jusqu'à 7.
 
-
+Le port d'entrée d'écoute midi est fixé à 0x90.
