@@ -10,8 +10,6 @@
 
 #include "mon_midi.h"
 
-enum TYPE_BOUTON { PULL_DOWN_EXT, PULL_UP_EXT, PULL_UP_ARDUINO };
-
 typedef struct {
 
   const byte pin;
@@ -29,26 +27,14 @@ void init_boutons(BOUTON* Tb[], const byte NOMBRE_BOUTONS) {
   for (int i = 0; i < NOMBRE_BOUTONS; i++) {
 
     BOUTON* b = Tb[i];
-
     b->lastDebounceTime = 0;
-
-    if (b->type == PULL_UP_ARDUINO) {
-      b->buttonState = b->lastButtonState = 1;
-      pinMode(b->pin, b->type);
-    } else if (b->type == PULL_DOWN_EXT) {
-      b->buttonState = b->lastButtonState = 0;
-    } else if (b->type == PULL_UP_EXT) {
-      b->buttonState = b->lastButtonState = 1;
-    }
-
+    b->buttonState = b->lastButtonState = 0;
     pinMode(b->pin, b->type);
   }
 }
 
 void affiche(BOUTON* Tb[], const byte NOMBRE_BOUTONS) {
-  //  const int N = sizeof(Tb) / sizeof(B*);
-  //  Serial.print("ERREUR !! N sera égal à 1 : ");Serial.println(N);
-
+  
   for (int i = 0; i < NOMBRE_BOUTONS; i++) {
     BOUTON* b = Tb[i];
     Serial.print("Bouton : pin=");

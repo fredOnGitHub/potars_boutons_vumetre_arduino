@@ -20,20 +20,15 @@
 #define BAUD 31250 // USB MIDI MODE for MOCO lufa
 #endif
 
+//#define TEST
+
 const byte Led = 11; // Pour utiliser la LED du module
 #define LedToggle digitalWrite (Led, !digitalRead(Led))
 
 
-//struct Z{
-//  const byte a;
-//  byte b;
-//  const byte c;
-//};
-////Z z ={1,2};
-//Z z {.a=1,.b=2};
-
 /////////////////////////////// Initialisation des boutons ///////////////////////////////
-BOUTON b1 = {2, PULL_UP_ARDUINO, 60};
+//BOUTON b1 = {9, INPUT_PULLUP, 60};
+BOUTON b1 = {9, INPUT, 60};
 BOUTON* Tb[] = {&b1};
 const int NOMBRE_BOUTONS = sizeof(Tb) / sizeof(BOUTON*);
 
@@ -45,7 +40,7 @@ const int NOMBRE_POTENTIOMETRES = sizeof(Tp) / sizeof(POTENTIOMETRE*);
 
 
 /////////////////////////////// Initialisation des VU-mètres ///////////////////////////////
-byte pins_leds_vumetre_1[] = { 4, 5, 6, 7, 10};
+byte pins_leds_vumetre_1[] = { 2, 3, 4, 5, 6, 7};
 VUMETRE v1 = {pins_leds_vumetre_1, sizeof(pins_leds_vumetre_1) / sizeof(byte),  0x90, 0};//C1 == 24
 // ...commande_1, C1) == Ch01.Note.C-1 de Traktor
 
@@ -55,9 +50,6 @@ const byte NOMBRE_VUMETRES = sizeof(Tv) / sizeof(VUMETRE*);
 
 void setup() {
   Serial.begin(BAUD);
-  //  Serial.println(z.a);
-  //  Serial.println(z.b);
-  //  Serial.println(z.c);
   init_boutons(Tb, NOMBRE_BOUTONS);
   init_vumetres(Tv, NOMBRE_VUMETRES);
   met_le_port_midi_OUTPUT_a(5);
@@ -104,13 +96,19 @@ void setup() {
 // }
 
 ISR(TIMER2_COMPA_vect) { //timer1 interrupt 8kHz toggles pin 9
-  //  LedToggle;
+#ifdef TEST
+  LedToggle;
+  Serial.println(digitalRead(b1.pin));
+#else
   checkMIDI();
+#endif
 }
 
 void loop() {
+#ifndef TEST
   gere(Tb, NOMBRE_BOUTONS);
   gere(Tp, NOMBRE_POTENTIOMETRES);
+#endif
 }
 
 void checkMIDI() {

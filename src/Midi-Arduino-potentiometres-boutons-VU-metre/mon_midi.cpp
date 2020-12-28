@@ -40,19 +40,3 @@ void noteOff(const byte pitch)
   Serial.write(pitch);
   Serial.write((byte)0); // velocity == force
 }
-
-void genere_le_tableau(void)
-{
-  // const char Notes[][80] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
-  // const int nb_Notes = sizeof(Notes) / sizeof(char[80]);
-  // int num = 0;
-
-  // for (int Octaves = -1; Octaves <= 9; Octaves++)
-  // {
-  //   for (int i = 0; i < nb_Notes; i++)
-  //   {
-  //     if (num <= 127)
-  //       printf("#define %s%d %d \n", Notes[i], Octaves, num++);
-  //   }
-  // }
-}
