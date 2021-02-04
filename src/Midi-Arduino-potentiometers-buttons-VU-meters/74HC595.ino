@@ -1,90 +1,101 @@
-
-void _74HC595_print_error(const byte m) {
-
-  sp("check_74HC595s : NO b[");
-  sp(m); sp("] >= PIN2 && b[");
-  sp(m); spl("] <= PIN13");
-}
-
-void see_if_error(const char *c, const byte pin) {
-  
-  if (pin < PIN2) {
-    sp("74HC595 : PIN "); sp(c); spl(" < PIN2");
-    ok = 0;
-  }
-  else if (pin > PIN13) {
-    sp("74HC595 : PIN "); sp(c); spl(" > PIN13");
-    ok = 0;
-  }
-  else if ( ! digital_pins[pin]) {
-    digital_pins[pin] = 1;
-    //sp("74HC595 : PIN n°"); sp(c); spl(" added");
-  } else {
-    sp("74HC595 : PIN "); sp(c); spl(" is already reserved");
-    ok = 0;
+void all_leds_off_STRUCT_74HC595() {
+  for (int i = 0 ; i < NB595_TOT_BYTE; i++) {
+    _74HC595_.t[i] = LOW;
   }
 }
-
-void check_74HC595s()
+void all_leds_on_STRUCT_74HC595() {
+  for (int i = 0 ; i < NB595_TOT_BYTE; i++) {
+    _74HC595_.t[i] = HIGH;
+  }
+}
+void test_direction_lights_STRUCT_74HC595() {
+  for (int i = 0 ; i < NB595_TOT_BYTE; i++) {
+    _74HC595_.t[i] = 1;
+    visual_state_leds_74HC595();
+    delay(300);
+  }
+}
+void blink_init() {
+  for (byte k = 0 ; k < 3; k++) {
+    all_leds_on_STRUCT_74HC595();
+    visual_state_leds_74HC595();
+    delay(300);
+    all_leds_off_STRUCT_74HC595();
+    visual_state_leds_74HC595();
+    delay(300);
+  }
+}
+void init_74HC595()
 {
-  for (byte i = 0; i < NB_ST_74HC595 && ok; i++) {
-    //    spl("74HC595");
-
-    STRUCT_74HC595 x = ST_74HC595[i];
-
-    see_if_error("latch_clock", x.latch_clock);
-    see_if_error("serial_data", x.serial_data);
-    see_if_error("shift_clock", x.shift_clock);
-
-    if (ok) {
-
-      if (x.mess_type != CC && x.mess_type != NOTE_ON ) {
-        spl("74HC595s : MIDI MESSAGE != CC & != NOTE_ON");
-        ok = 0;
-        //NOT  PITCH_BEND because Traktor modify send <status> <data1_modified> <0>
-      }
-    }
-  }
-}
-void init_74HC595s()
-{
-  for (byte i = 0; i < NB_ST_74HC595; i++) {
-    STRUCT_74HC595 x = ST_74HC595[i];
+  if (NB595) {
+    _74HC595 x = _74HC595_;
     pinMode(x.latch_clock, OUTPUT);
     pinMode(x.serial_data, OUTPUT);
     pinMode(x.shift_clock, OUTPUT);
   }
 }
 
-unsigned char reverse_char(unsigned char b) {
-  b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
-  b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
-  b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
-  return b;
+void visual_state_leds_74HC595() {
+  if (NB595_TOT_BYTE) {
+    digitalWrite(_74HC595_.latch_clock, LOW);
+    for (byte i = 0; i < NB595_TOT_BYTE; i++) {
+      digitalWrite(_74HC595_.shift_clock, LOW);
+      const byte val = _74HC595_.t[i];
+      digitalWrite(_74HC595_.serial_data, val);
+      digitalWrite(_74HC595_.shift_clock, HIGH);
+    }
+    digitalWrite(_74HC595_.latch_clock, HIGH);
+  }
 }
 
-const byte FOR_8_LEDS[] = {0, 1, 3, 7, 15, 31, 63, 127, 255};
 
-void manage(const STRUCT_74HC595 p, const byte b)
-{
-  const byte limite = map(b, 0, 127, 0, 8);//8 OUTPUT LEDS
-  //  spl(limite);
 
-  byte r = FOR_8_LEDS[limite];
-  if (p.direction_print) {
-    r = reverse_char(r);
+
+
+
+void all_leds_off(USE_PART_OF_74HC595 * p) {
+  for (int i = 0 ; i < p->p_length; i++) {
+    *(p->p[i]) = LOW;
   }
-  digitalWrite(p.latch_clock, LOW);
-  for (char i = 7; i >= 0 ; i--) {//char to see if < 0
-    digitalWrite(p.shift_clock, LOW);
-    int val = bitRead (r, i);
-    digitalWrite(p.serial_data, val);
-    digitalWrite(p.shift_clock, HIGH);
+}
+void all_leds_on(USE_PART_OF_74HC595 * p) {
+  for (int i = 0 ; i < p->p_length; i++) {
+    *(p->p[i]) = HIGH;
   }
-  digitalWrite(p.latch_clock, HIGH);
+}
+void set_register(USE_PART_OF_74HC595 * p, const byte velocity_byte) {
+  if (NB595_TOT_BYTE && p->p_length) {
 
-  //  digitalWrite(p.latch_clock, LOW);
-  //  //    shiftOut(p.serial_data, p.shift_clock, MSBFIRST, t[limite]);//n : byte
-  //  shiftOut(p.serial_data, p.shift_clock, LSBFIRST, t[limite]);//n : byte
-  //  digitalWrite(p.latch_clock, HIGH);
+    const byte limite = map(velocity_byte, 0, 127, 0, p->p_length);
+    //  spl(limite);
+    byte i = 0;
+    for ( ; i < limite ; i++) {
+      *(p->p[i]) = HIGH;
+    }
+    for ( ; i < p->p_length ; i++) {
+      *(p->p[i]) = LOW;
+    }
+  }
+}
+
+
+
+
+void test_direction_lights_USE_PART_OF_74HC595() {
+  for (byte k = 0 ; k < NB_UPO_74HC595; k++) {
+    USE_PART_OF_74HC595 * x = UPO_74HC595_ARRAY[k];
+    for (byte i = 0 ; i < x->p_length; i++) {
+      *(x->p[i]) = 1;
+      visual_state_leds_74HC595();
+      delay(100);
+    }
+  }
+}
+void check_millis() {
+  for (byte i = 0; i < NB_UPO_74HC595; i++) {
+    if ((millis() - UPO_74HC595_ARRAY[i]->millis_) > 2000) {
+      all_leds_off(UPO_74HC595_ARRAY[i]);
+      UPO_74HC595_ARRAY[i]->millis_ = millis();
+    }
+  }
 }

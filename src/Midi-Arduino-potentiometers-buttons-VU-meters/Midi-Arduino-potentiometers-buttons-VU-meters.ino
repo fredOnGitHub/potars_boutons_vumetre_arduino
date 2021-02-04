@@ -5,26 +5,23 @@
 
 */
 
-//const byte Led = 13; // Pour utiliser la LED du module
-//#define LedToggle digitalWrite (Led, !digitalRead(Led))
+#include "constantes.h"
 
 #define SERIE
+#define NB595 2
+#define NB595_TOT_BYTE NB595 * 8
+#define sp (Serial.print)
+#define spl (Serial.println)
+const byte Led = 13; // Pour utiliser la LED du module
+#define LedToggle digitalWrite (Led, !digitalRead(Led))
+#define CA 30
+#define CB 254 // !! < 255 car test byte > CB et 256 n'existe pas
 
 #ifdef SERIE
 #define BAUD 115200
 #else
 #define BAUD 31250 // for MOCO lufa (for example)
 #endif
-
-#define M 128
-#define K 5
-
-#include "constantes.h"
-
-#define sp (Serial.print)
-#define spl (Serial.println)
-
-
 
 enum BUTTON_TYPE_WITH_ARDUINO {
   PULL_DOWN = 66 , PULL_UP , PULL_UP_ARDUINO
@@ -54,6 +51,7 @@ struct POTENTIOMETER {
   int value;//1023 max > 255
 };
 
+
 struct VUMETER {
   const byte pin_start_vu_meter;
   const byte nb_pins;
@@ -62,145 +60,111 @@ struct VUMETER {
   const byte midi_note;
 };
 
-struct STRUCT_74HC595 {
+struct _74HC595 {
   const byte serial_data;// 14
   const byte latch_clock;// 12
   const byte shift_clock;// 11
-  const byte direction_print;
+  byte t[NB595_TOT_BYTE];
+};
 
+struct USE_PART_OF_74HC595 {
   const byte midi_channel;
   const MIDI_MESSAGE_TYPE mess_type;
   const byte midi_note;
+  byte** p;//array of (byte*)
+  byte p_length;
+  unsigned long millis_;
 };
 
 
 //EXAMPLES
-//BUTTON b[] = { {PIN9, PULL_DOWN, PITCH_BEND, CHAN1, CONTROL11} };
-//POTENTIOMETER p[] = { {A0, PITCH_BEND, CHAN5, CONTROL5} };
-//VUMETER v[] = { {PIN2, 6, CHAN2, CC, CONTROL0}, {PIN8, 1, CHAN2, CC, CONTROL1} };
+BUTTON BUTTON1 = {PIN2, PULL_UP_ARDUINO, NOTE_ON, CHAN1, CONTROL11};
+BUTTON* BUTTON_ARRAY[] = {&BUTTON1};
 
+POTENTIOMETER POT1 = {A0, CC, CHAN5, CONTROL5};
+POTENTIOMETER* POTENTIOMETER_ARRAY[] = {&POT1};
 
-BUTTON B[] = { {PIN2, PULL_UP_ARDUINO, PITCH_BEND, CHAN1, CONTROL11} };
-POTENTIOMETER P[] = { {A0, PITCH_BEND, CHAN5, CONTROL5} };
-VUMETER V[] = { {PIN4, 4, CHAN2, CC, CONTROL0} };
-STRUCT_74HC595 ST_74HC595[] = { {PIN10, PIN9, PIN8, 0, CHAN1, CC, CONTROL0} };
+VUMETER VU1 = {PIN4, 4, CHAN2, CC, CONTROL0};
+VUMETER* VUMETER_ARRAY[] = {};
 
-const byte NB_B = sizeof(B) / sizeof(BUTTON);
-const byte NB_P = sizeof(P) / sizeof(POTENTIOMETER);
-const byte NB_V = sizeof(V) / sizeof(VUMETER);
-const byte NB_ST_74HC595 = sizeof(ST_74HC595) / sizeof(STRUCT_74HC595);
+_74HC595 _74HC595_ = { PIN10, PIN9, PIN8 };
+
+byte* p1 [] = {
+  &_74HC595_.t[8], &_74HC595_.t[9], &_74HC595_.t[10], &_74HC595_.t[11],
+  &_74HC595_.t[12], &_74HC595_.t[13], &_74HC595_.t[14], &_74HC595_.t[15],
+};
+USE_PART_OF_74HC595 UPO_74HC595_1 = {CHAN1, CC, CONTROL0, p1, sizeof(p1) / sizeof(byte*), 0} ;
+
+byte* p2 [] = {
+  &_74HC595_.t[7], &_74HC595_.t[6], &_74HC595_.t[5], &_74HC595_.t[4],
+};
+USE_PART_OF_74HC595 UPO_74HC595_2 = {CHAN2, CC, CONTROL0, p2, sizeof(p2) / sizeof(byte*), 0} ;
+
+USE_PART_OF_74HC595* UPO_74HC595_ARRAY [] = { &UPO_74HC595_1, &UPO_74HC595_2 };
+
+const byte NB_B = sizeof(BUTTON_ARRAY) / sizeof(BUTTON *);
+const byte NB_P = sizeof(POTENTIOMETER_ARRAY) / sizeof(POTENTIOMETER *);
+const byte NB_V = sizeof(VUMETER_ARRAY) / sizeof(VUMETER *);
+const byte NB_UPO_74HC595 = sizeof(UPO_74HC595_ARRAY) / sizeof(USE_PART_OF_74HC595 *);
 
 unsigned long debounce_delay = 10; // the debounce time; increase if the output flickers
+byte varCompteur = 0; // La variable compteur
 
-#define NB_DP 14 //0..13
-byte digital_pins[NB_DP];
-
-#define NB_AP 7 //0..6
-byte analog_pins[NB_AP];
-
-byte ok = 1;
-
-void afd() {
-  sp("< ");
-  int i = 0;
-  for ( ; i < NB_DP - 1; i++) {
-    sp(i); sp(":"); sp(digital_pins[i]); sp(" , ");
-  }
-  sp(i); sp(":"); sp(digital_pins[i]);
-  spl(" >");
-}
-void afa() {
-  sp("< ");
-  int i = 0;
-  for (int i = 0; i < NB_AP - 1; i++) {
-    sp(i); sp(":"); sp(analog_pins[i]); sp(" , ");
-  }
-  sp(i); sp(":"); sp(analog_pins[i]);
-  spl(" >");
-}
 void setup() {
 
   Serial.begin(BAUD);
-  //  spl(A0);
-  //  spl(A5);
+  pinMode(Led, OUTPUT);
+  init_buttons();
+  init_vumeters();
+  init_74HC595();
 
-  memset( digital_pins, 0, sizeof(digital_pins) );
-  memset( analog_pins, 0,  sizeof(analog_pins) );
+  pinMode (Led, OUTPUT);
 
-  check_buttons();
-  afd();
-  check_vumeters();
-  afd();
-  check_potentiometers();
-  afa();
-  check_74HC595s();
-  afd();
-  //  ok = 0;
+  //  blink_init();
+  //  test_direction_lights_STRUCT_74HC595();
+  test_direction_lights_USE_PART_OF_74HC595();
 
-  if ( ok ) {
-
-    init_buttons();
-    init_vumeters();
-    init_74HC595s();
-
-    //  pinMode (Led, OUTPUT);
-    cli(); // Désactive l'interruption globale
-    TCCR2A = 0b00000010;
-    TCCR2B = 0b00000010; // Clock / 8 soit 16 micro-s et WGM22 = 0
-    TIMSK2 = 0b00000010; // Interruption locale autorisée par OCIE2A
-    OCR2A = 250;
-    sei(); // Active l'interruption globale
-
-  } else {
-    pinMode(LED_BUILTIN, OUTPUT);
-
-    while (1) { //infinity loop
-      digitalWrite (LED_BUILTIN, !digitalRead(LED_BUILTIN));
-      delay(800);
-    }
-  }
+  bitClear (TCCR2A, WGM20); // WGM20 = 0
+  bitClear (TCCR2A, WGM21); // WGM21 = 0
+  TCCR2B = 0b00000110;      // Clock / 256 soit 16 micro-s et WGM22 = 0
+  TIFR2 = 0b00000001;       // TOV2
+  TCNT2 = 256 - CA;        // Chargement du timer à 6
 }
-
-byte varCompteur = 0; // La variable compteur
-
-// Routine d'interruption
-ISR(TIMER2_COMPA_vect) {
-  if (varCompteur++ > 250) {
-    varCompteur = 0;
-    //    checkMIDI_VUMETER();
-    //    checkMIDI_74HC595();
-    //    LedToggle;
-  }
-}
-
 void loop() {
   manage_buttons();
-  manage_potentiomters();
-  check_MIDI_VUMETER();
+  manage_potentiometers();
+  if (bitRead (TIFR2, 0) == 1) {       // Flag TOV2 mis à 1 ?
+    TCNT2 = 256 - CA;         // Rechargement du timer à 6
+    bitSet (TIFR2, TOV2);      // Remise à zéro du flag TOV2 (voir texte)
+    if (varCompteur++ > CB) { // Incrémentation et a atteint CB ?
+      varCompteur = 0;         // On recommence un nouveau cycle
+      LedToggle;             // Inversion de la LED
+      check_MIDI_VUMETER();
+      check_millis();
+      visual_state_leds_74HC595();
+    }
+  }
 }
 
 void check_MIDI_VUMETER() {
   //<BF> <00> <11>  =>  <CC Channel 16>  <controller n°1>  <velocity>
   //<9F> <00> <70>  =>  <NOTE_ON Channel 16>  <controller n°1>  <velocity>
-  if (Serial.available() >= 3) {
-
-    const byte mess_type = Serial.read();//with then channel number
-    const byte midi_note = Serial.read();
-    const byte velocity_byte = Serial.read();
-
-    for (byte i = 0; i < NB_V; i++) {
-      VUMETER x = V[i];
-      if ((x.mess_type +  x.midi_channel) == mess_type) {
-        if (x.midi_note == midi_note) {
-          manage(x, velocity_byte);//<=127
-        }
-      }
-    }
-    for (byte i = 0; i < NB_ST_74HC595; i++) {
-      STRUCT_74HC595 x = ST_74HC595[i];
-      if ((x.mess_type +  x.midi_channel) == mess_type) {
-        if (x.midi_note == midi_note) {
-          manage(x, velocity_byte);//<=127
+  byte n = Serial.available();
+  USE_PART_OF_74HC595 *x;
+  if ( !(n % 3)) {
+    while (n) {
+      const byte commandByte = Serial.read();//read first byte
+      const byte noteByte = Serial.read();//read next byte
+      const byte velocityByte = Serial.read();//read final byte
+      n -= 3;
+      for (byte i = 0; i < NB_UPO_74HC595; i++) {
+        x = UPO_74HC595_ARRAY[i];
+        if ((x->mess_type + x->midi_channel) == commandByte) {
+          if (x->midi_note == noteByte) {
+            set_register(x, velocityByte);
+            x->millis_ = millis();
+            break;
+          }
         }
       }
     }

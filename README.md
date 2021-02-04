@@ -9,13 +9,11 @@ Table of Contents
     - [2.1.1 Without the SERIE directive: Arduino with the 16U2 chipset](#211-without-the-serie-directive-arduino-with-the-16u2-chipset)
     - [2.1.2 Without the SERIAL directive: Arduino with CH340 chipset (not 16U2)](#212-without-the-serial-directive-arduino-with-ch340-chipset-not-16u2)
   - [2.2 With the SERIE directive](#22-with-the-serie-directive)
-- [3 Timer of 32 Hz for the Midi playback interruption](#3-timer-of-32-hz-for-the-midi-playback-interruption)
-- [4 Examples of configurations](#4-examples-of-configurations)
-  - [4.1 Example of push button configuration](#41-example-of-push-button-configuration)
-  - [4.2 Example of potentiometer configuration](#42-example-of-potentiometer-configuration)
-  - [4.3 Example of a VU meter configuration with Arduino PINs](#43-example-of-a-vu-meter-configuration-with-arduino-pins)
-  - [4.4 Example of a VU meter configuration with 74HC595 (configured for 8 leds)](#44-example-of-a-vu-meter-configuration-with-74hc595-configured-for-8-leds)
-- [5 The programme doesn't work](#5-the-programme-doesnt-work)
+- [3 Examples of configurations](#3-examples-of-configurations)
+  - [3.1 Example of push button configuration](#31-example-of-push-button-configuration)
+  - [3.2 Example of potentiometer configuration](#32-example-of-potentiometer-configuration)
+  - [3.3 Example of a VU meter configuration with Arduino PINs](#33-example-of-a-vu-meter-configuration-with-arduino-pins)
+  - [3.4 Example of a VU meter configuration with 2 X 74HC595 (configured for 16 leds)](#34-example-of-a-vu-meter-configuration-with-2-x-74hc595-configured-for-16-leds)
   
 ---
 
@@ -25,16 +23,9 @@ This is an Arduino Uno (Mega, ...) Midi project for :
  - send midi commands with potentiometers, push buttons,
  - read meter signals with Traktor in particular.
 
-The commands to send push buttons, and potentiometers, are made in the endless loop (loop).
+All the commands to send push buttons, and potentiometers, VU meters with digital PINS or with 74HC595 are made in the endless loop (loop).
 
-Note : If there is a bad configuration like :
-- overflow of Vu-meter
-- conflict with other PIN
-- ...
-
-the programme won't work.
-
-To see the error messages and correct the configurations PINS, it is necessary to open a serial console at 115200 bauds.
+Define set of BUTTON, etc, and put all theses references in an array : it is a good practise. BUTTON reference in 
 
 ## 2 Compilation
 
@@ -99,13 +90,9 @@ It will then be necessary to configure the I / O ports of Traktor like this for 
 
 ![](./documentation/Traktor.PNG)
 
-## 3 Timer of 32 Hz for the Midi playback interruption
+## 3 Examples of configurations
 
-Input status led is red at ~32 Hz. 
-
-## 4 Examples of configurations
-
-### 4.1 Example of push button configuration
+### 3.1 Example of push button configuration
 
 Note : Only noteOn is send (not a noteOff too after a delay).
 
@@ -126,7 +113,7 @@ An example of a configuration :
 
 ![](./documentation/Traktor_learn_noteOn_play_stop.PNG)
 
-### 4.2 Example of potentiometer configuration
+### 3.2 Example of potentiometer configuration
 
 ```
 POTENTIOMETER p[] = { {A0, PITCH_BEND, CHAN5, 5} };
@@ -143,7 +130,7 @@ An example of a configuration with Traktor :
 
 ![](./documentation/Traktor_learn_cc_potentiometer.PNG)
 
-### 4.3 Example of a VU meter configuration with Arduino PINs
+### 3.3 Example of a VU meter configuration with Arduino PINs
 
 ```
 VUMETER v[] = { {2, 6, NOTE_ON, 0}, {8, 1, NOTE_ON, 1} };
@@ -169,25 +156,51 @@ It is a playing state. It is defined like that in Traktor for example :
 
 ![](./documentation/Traktor_out_play_pause_state.PNG)
 
-### 4.4 Example of a VU meter configuration with 74HC595 (configured for 8 leds)
+### 3.4 Example of a VU meter configuration with 2 X 74HC595 (configured for 16 leds)
+
+Because 2 X 74HC595 (or more cascaded IC) there are 2*8 Leds, so 16 in total.
+
+The configuration is ![](./documentation/74HC595_bb.jpg)
+Another picture is ![](./documentation/74HC595_simpler.png)
+where you can see the display order (0 to 15) if you use "test_direction_lights_STRUCT_74HC595()" function.
+
+So if you want to use a VU meter which goes from 8 to 15 (from right to left) (15 is when the sound is big) you have to configure it like that :
 
 ```
-STRUCT_74HC595 ST_74HC595[] = { {PIN10, PIN9, PIN8, 0, CHAN1, CC, CONTROL0} };
+byte* p1 [] = {
+  &_74HC595_.t[8], &_74HC595_.t[9], &_74HC595_.t[10], &_74HC595_.t[11],
+  &_74HC595_.t[12], &_74HC595_.t[13], &_74HC595_.t[14], &_74HC595_.t[15],
+};
+USE_PART_OF_74HC595 UPO_74HC595_1 = {CHAN1, CC, CONTROL0, p1, sizeof(p1) / sizeof(byte*), 0} ;
+```
+always put 0 in the end (..., 0} ;).
+
+Another VU meter which goes from 7 to 0 (from right to left) (0 is when the sound is big) you have to configure it like that :
+```
+byte* p2 [] = {
+  &_74HC595_.t[7], &_74HC595_.t[6], &_74HC595_.t[5], &_74HC595_.t[4],
+  &_74HC595_.t[3], &_74HC595_.t[2], &_74HC595_.t[1], &_74HC595_.t[0],
+};
+USE_PART_OF_74HC595 UPO_74HC595_2 = {CHAN2, CC, CONTROL0, p2, sizeof(p2) / sizeof(byte*), 0} ;
+```
+Finally you put adress element like that
+```
+USE_PART_OF_74HC595* UPO_74HC595_ARRAY [] = { &UPO_74HC595_1, &UPO_74HC595_2 };
+```
+Configure the 2 X 74HC595 (or more) with searching "NB595" and put it like that :
+
+```
+#define NB595 2
 ```
 
-- PIN10 : serial data from PIN 14 in 74HC595
-- PIN9 : latch clock from PIN 12 in 74HC595
-- PIN8 : shift clock from PIN 11 in 74HC595.
-  Necessary to respect this order about theses conexions of 74HC595
-- 0 : a direction to print the 8 leds
-- CHAN1, CC, CONTROL0 : déjà vu.
+Last thing :
+```
+struct _74HC595 {
+  const byte serial_data;// 14
+  const byte latch_clock;// 12
+  const byte shift_clock;// 11
+  byte t[NB595_TOT_BYTE];
+};
+```
+where you define serial_data, latch_clock and shift_clock.
 
-
-## 5 The programme doesn't work
-
-It is a bad configuration like :
-- overflow of Vu-meter
-- conflict with other PIN
-- ...
-
-To see the error messages and correct the configurations PINS, it is necessary to open a serial console at 115200 bauds.
