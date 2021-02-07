@@ -164,7 +164,7 @@ The configuration is ![](./documentation/74HC595_bb.jpg)
 Another picture is ![](./documentation/74HC595_simpler.png)
 where you can see the display order (0 to 15) if you use "test_direction_lights_STRUCT_74HC595()" function.
 
-So if you want to use a VU meter which goes from 8 to 15 (from right to left) (15 is when the sound is big) you have to configure it like that :
+So if you want to use a VU meter (a section of all Leds) which goes from 8 to 15 (from left to right) (15 is when the sound is big) you have to configure it like that :
 
 ```
 byte* p1 [] = {
@@ -175,7 +175,7 @@ USE_PART_OF_74HC595 UPO_74HC595_1 = {CHAN1, CC, CONTROL0, p1, sizeof(p1) / sizeo
 ```
 always put 0 in the end (..., 0} ;).
 
-Another VU meter which goes from 7 to 0 (from right to left) (0 is when the sound is big) you have to configure it like that :
+Another VU meter (a section of all Leds) which goes from 7 to 0 (from left to right) (0 is when the sound is big) you have to configure it like that :
 ```
 byte* p2 [] = {
   &_74HC595_.t[7], &_74HC595_.t[6], &_74HC595_.t[5], &_74HC595_.t[4],
